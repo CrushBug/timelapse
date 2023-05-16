@@ -6,18 +6,20 @@
 #TODO add command line parsing, and add:
 #-verbose - print error messages
 #-config  - specify the getsnap.ini config file location 
-# v0.11
+# v0.12
+# - (0.12) fixing issue with first run and no created path
 # - (0.11) switching to def main(), if...is
 
 #imports
 import configparser
 from datetime import datetime
 import os
+#pip install requests
 import requests
 import sys
 
 #constants
-VERSION = '0.11'
+VERSION = '0.12'
 CONFIG_FILENAME = 'getsnap.ini'
 SECTION_CAMERA = 'Camera'
 SECTION_GENERAL = 'general'
@@ -56,7 +58,9 @@ def main():
     savePath = os.path.join(snapPath, folderName)         #'.../backyard/'
     #if the camera folder name doesn't exist, create it
     if os.path.exists(savePath) is False:
-      os.mkdir(savePath)
+      #os.mkdir(savePath)
+      #recursive dir create
+      os.makedirs(savePath)
     #store all snaps in date subfolders
     savePath = os.path.join(savePath, snapDate)           #'.../backyard/2022-11-30/'
     #if the date subfolder doesn't exist, create it
